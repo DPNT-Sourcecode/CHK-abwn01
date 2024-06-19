@@ -1,5 +1,5 @@
 from collections import Counter
-from CHK.db import prices, multi_offers, free_item_offers, group_offers
+from db import prices, multi_offers, free_item_offers, group_offers
 
 
 # noinspection PyUnusedLocal
@@ -44,3 +44,4 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
