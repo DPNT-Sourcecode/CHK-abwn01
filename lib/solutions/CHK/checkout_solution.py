@@ -8,7 +8,7 @@ prices = {
     "E": 40
 }
 
-offers = {
+multi_offers = {
     "A": [(5, 200), (3, 130)],
     "B": [(2, 45)]
 }
@@ -32,13 +32,14 @@ def checkout(skus: str) -> int:
 
     # apply discounts
     for item, count in cart.items():
-        if item in offers:
-            required, price = offers[item]
-            if count >= required:
-                offer_count = count // required
-                total += offer_count * price
-                count -= offer_count * required
+        if item in multi_offers:
+            for required, price in multi_offers[item]:
+                if count >= required:
+                    offer_count = count // required
+                    total += offer_count * price
+                    count -= offer_count * required
         total += count * prices[item]
 
     return total
+
 
