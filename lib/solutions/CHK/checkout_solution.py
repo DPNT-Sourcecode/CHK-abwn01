@@ -22,3 +22,14 @@ def checkout(skus):
     total = 0
     cart = Counter(skus)
 
+    # apply discounts
+    for item, count in cart.items():
+        if item in offers:
+            for required, price in offers[item]:
+                if count >= required:
+                    offer_count = count // required
+                    total += offer_count * price
+                    count -= offer_count * required
+        total += count * prices[item]
+
+
