@@ -1,23 +1,5 @@
 from collections import Counter
-
-prices = {
-    "A": 50,
-    "B": 30,
-    "C": 20,
-    "D": 15,
-    "E": 40,
-    "F": 10
-}
-
-multi_offers = {
-    "A": [(5, 200), (3, 130)],
-    "B": [(2, 45)]
-}
-
-free_item_offers = {
-    "E": (2, "B", 1),
-    "F": (2, "F", 1)
-}
+from db import prices, multi_offers, free_item_offers
 
 
 # noinspection PyUnusedLocal
@@ -58,3 +40,4 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
