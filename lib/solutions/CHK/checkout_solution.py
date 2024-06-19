@@ -5,7 +5,8 @@ prices = {
     "B": 30,
     "C": 20,
     "D": 15,
-    "E": 40
+    "E": 40,
+    "F": 10
 }
 
 multi_offers = {
@@ -14,7 +15,8 @@ multi_offers = {
 }
 
 free_item_offers = {
-    "E": (2, "B", 1)
+    "E": (2, "B", 1),
+    "F": (2, "F", 1)
 }
 
 
@@ -54,6 +56,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
