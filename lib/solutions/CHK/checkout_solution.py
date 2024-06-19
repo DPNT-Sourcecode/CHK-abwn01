@@ -14,6 +14,21 @@ def checkout(skus: str) -> int:
     total = 0
     cart = Counter(skus)
 
+    # apply free item offers
+    for item, offer in free_item_offers.items():
+        if item in cart:
+            required, free_item, quant = offer
+            if item == free_item:
+                required += quant
+            count = cart[item]
+            if count >= required:
+                offer_count = count // required
+                free_items_count = offer_count * quant
+                if free_item in cart:
+                    cart[free_item] = max(
+                        0, cart[free_item] - free_items_count
+                    )
+
     # apply group offers
     for items, required, price in group_offers:
         items_sorted = list(items)
@@ -32,21 +47,6 @@ def checkout(skus: str) -> int:
                         items_in_offer -= 1
                         break
 
-    # apply free item offers
-    for item, offer in free_item_offers.items():
-        if item in cart:
-            required, free_item, quant = offer
-            if item == free_item:
-                required += quant
-            count = cart[item]
-            if count >= required:
-                offer_count = count // required
-                free_items_count = offer_count * quant
-                if free_item in cart:
-                    cart[free_item] = max(
-                        0, cart[free_item] - free_items_count
-                    )
-
     # apply multi offers
     for item, count in cart.items():
         if item in multi_offers:
@@ -58,6 +58,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
