@@ -15,7 +15,7 @@ offers = {
 
 # noinspection PyUnusedLocal
 # skus = unicode string
-def checkout(skus):
+def checkout(skus: str) -> int:
     if not isinstance(skus, str):
         return -1
     for x in skus:
@@ -36,6 +36,7 @@ def checkout(skus):
         total += count * prices[item]
 
     return total
+
 
 
 
