@@ -25,7 +25,7 @@ class TestCheckout(unittest.TestCase):
             ("H", 10), ("HHHHH", 45), ("HHHHHHHHHH", 80),
             ("I", 35),
             ("J", 60),
-            ("K", 80), ("KK", 120),
+            ("K", 70), ("KK", 120),
             ("L", 90),
             ("M", 15),
             ("N", 40), ("NNNM", 120),
@@ -33,14 +33,14 @@ class TestCheckout(unittest.TestCase):
             ("P", 50), ("PPPPP", 200),
             ("Q", 30), ("QQQ", 80),
             ("R", 50), ("RRRQ", 150),
-            ("S", 30),
+            ("S", 20),
             ("T", 20),
             ("U", 40), ("UUUU", 120),
             ("V", 50), ("VV", 90), ("VVV", 130),
             ("W", 20),
-            ("X", 90),
-            ("Y", 10),
-            ("Z", 50),
+            ("X", 17),
+            ("Y", 20),
+            ("Z", 21),
             ("STX", 45),
             ("STXYZ", 82),
             ("XYZS", 62)
@@ -55,5 +55,6 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 

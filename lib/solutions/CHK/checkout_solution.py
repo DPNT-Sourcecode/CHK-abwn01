@@ -1,15 +1,51 @@
 from collections import Counter
-from db import prices, multi_offers, free_item_offers, group_offers
+
+prices = {
+    "A": 50, "B": 30, "C": 20, "D": 15, "E": 40,
+    "F": 10, "G": 20, "H": 10, "I": 35, "J": 60,
+    "K": 70, "L": 90, "M": 15, "N": 40, "O": 10,
+    "P": 50, "Q": 30, "R": 50, "S": 20, "T": 20,
+    "U": 40, "V": 50, "W": 20, "X": 17, "Y": 20,
+    "Z": 21
+}
+
+multi_offers = {
+    "A": [(5, 200), (3, 130)],
+    "B": [(2, 45)],
+    "H": [(10, 80), (5, 45)],
+    "K": [(2, 120)],
+    "P": [(5, 200)],
+    "Q": [(3, 80)],
+    "V": [(3, 130), (2, 90)]
+}
+
+free_item_offers = {
+    "E": (2, "B", 1),
+    "F": (2, "F", 1),
+    "N": (3, "M", 1),
+    "R": (3, "Q", 1),
+    "U": (3, "U", 1)
+}
+
+group_offers = {
+    ("STXYZ", 3, 45)
+}
+
+
+def validated(x):
+    if not isinstance(x, str):
+        return False
+    for _ in x:
+        if _ not in prices:
+            return False
+    return True
 
 
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
-    if not isinstance(skus, str):
+    if not validated(skus):
         return -1
-    for x in skus:
-        if x not in prices:
-            return -1
 
     total = 0
     cart = Counter(skus)
@@ -58,6 +94,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
