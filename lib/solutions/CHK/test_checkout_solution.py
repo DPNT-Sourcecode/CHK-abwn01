@@ -42,7 +42,7 @@ class TestCheckout(unittest.TestCase):
             ("Y", 10),
             ("Z", 50),
             ("STX", 45),
-            ("STXTZ", 82),
+            ("STXYZ", 82),
             ("XYZS", 62)
         ]
 
@@ -55,4 +55,5 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
