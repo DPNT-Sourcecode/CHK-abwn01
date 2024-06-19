@@ -6,17 +6,16 @@ class TestCheckout(unittest.TestCase):
 
     def setUp(self):
         self.test_cases = [
-            ("A", 50),
+            ("A", 50), ("AAAAA", 200), ("AAAAAA", 250), ("AAA", 130),
             ("B", 30),
             ("C", 20),
             ("D", 15),
-            ("AAA", 130),
+            
             ("BB", 45),
             ("Z", -1),
             (1, -1),
             (True, -1),
-            ("AAAAA", 200),
-            ("AAAAAA", 250),
+
             ("E", 40),
             ("EEB", 80),
             ("EEEBB", 150),
@@ -24,7 +23,10 @@ class TestCheckout(unittest.TestCase):
             ("FFF", 20),
             ("FFFF", 30),
             ("FFFFFF", 40),
-            ("FFFFFFF", 50)
+            ("FFFFFFF", 50),
+            ("G", 20),
+            ("H", 10), ("HHHHH", 45), ("HHHHHHHHHH", 80),
+
         ]
 
     def test_checkout(self):
@@ -36,3 +38,4 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
