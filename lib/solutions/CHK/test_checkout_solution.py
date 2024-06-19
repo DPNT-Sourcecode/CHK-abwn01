@@ -18,7 +18,8 @@ class TestCheckout(unittest.TestCase):
             ("AAAAA", 200),
             ("AAAAAA", 250),
             ("E", 40),
-            ("EEB", 80)
+            ("EEB", 80),
+            ("EEEBB", 150)
         ]
 
     def test_checkout(self):
@@ -30,4 +31,5 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
