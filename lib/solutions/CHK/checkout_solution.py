@@ -41,16 +41,7 @@ def validated(x):
     return True
 
 
-# noinspection PyUnusedLocal
-# skus = unicode string
-def checkout(skus: str) -> int:
-    if not validated(skus):
-        return -1
-
-    total = 0
-    cart = Counter(skus)
-
-    # apply free item offers
+def apply_free_item_offers(cart):
     for item, offer in free_item_offers.items():
         if item in cart:
             required, free_item, quant = offer
@@ -65,7 +56,8 @@ def checkout(skus: str) -> int:
                         0, cart[free_item] - free_items_count
                     )
 
-    # apply group offers
+
+def apply_group_offers(cart):
     for items, required, price in group_offers:
         items_sorted = list(items)
         items_sorted.sort(key=lambda x: prices[x], reverse=True)
@@ -83,6 +75,21 @@ def checkout(skus: str) -> int:
                         items_in_offer -= 1
                         break
 
+
+# noinspection PyUnusedLocal
+# skus = unicode string
+def checkout(skus: str) -> int:
+    if not validated(skus):
+        return -1
+
+    total = 0
+    cart = Counter(skus)
+
+    # apply free item offers
+    apply_free_item_offers(cart)
+
+    # apply group offers
+
     # apply multi offers
     for item, count in cart.items():
         if item in multi_offers:
@@ -94,6 +101,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
