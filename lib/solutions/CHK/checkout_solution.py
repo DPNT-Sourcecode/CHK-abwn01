@@ -34,6 +34,16 @@ def checkout(skus: str) -> int:
         items_sorted = list(items)
         items_sorted.sort(key=lambda x: prices[x], reverse=True)
         valid_item_count = sum(cart.get(k, 0) for k in items_sorted)
+        if valid_item_count >= required:
+            offer_count = valid_item_count // required
+            total += offer_count * price
+            items_in_offer = offer_count * required
+            while items_in_offer > 0:
+                for item in items_sorted:
+                    if cart.get(item, 0) > 0:
+                        cart[item] -= 1
+                        items_in_offer -= 1
+                        break
 
     # apply multi offers
     for item, count in cart.items():
@@ -46,5 +56,6 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
