@@ -14,6 +14,24 @@ def checkout(skus: str) -> int:
     total = 0
     cart = Counter(skus)
 
+    # apply group offers
+    for items, required, price in group_offers:
+        items_sorted = list(items)
+        items_sorted.sort(key=lambda x: prices[x], reverse=True)
+        valid_item_count = sum(cart.get(k, 0) for k in items_sorted)
+
+        if valid_item_count >= required:
+            offer_count = valid_item_count // required
+            total += offer_count * price
+            items_in_offer = offer_count * required
+
+            while items_in_offer > 0:
+                for item in items_sorted:
+                    if cart.get(item, 0) > 0:
+                        cart[item] -= 1
+                        items_in_offer -= 1
+                        break
+
     # apply free item offers
     for item, offer in free_item_offers.items():
         if item in cart:
@@ -29,37 +47,6 @@ def checkout(skus: str) -> int:
                         0, cart[free_item] - free_items_count
                     )
 
-    # apply group offers
-    for items, required, price in group_offers:
-        items_sorted = list(items)
-        items_sorted.sort(key=lambda x: prices[x], reverse=True)
-        valid_item_count = sum(cart.get(k, 0) for k in items_sorted)
-
-    for items, required, price in group_offer:
-        items_sorted = list(items)
-        items_sorted.sort(key=lambda x: prices[x], reverse=True)
-        valid_item_count = sum(cart.get(k, 0) for k in items_sorted)
-        while valid_item_count >= required:
-            total += price
-            items_in_offer = required
-            for item in items_sorted:
-                while cart[item] > 0 and items_in_offer > 0:
-                    cart[item] -= 1
-                    items_in_offer -= 1
-                    valid_item_count -= 1
-
-        # if valid_item_count >= required:
-        #     offer_count = valid_item_count // required
-        #     total += offer_count * price
-        #     items_in_offer = offer_count * required
-
-        #     while items_in_offer > 0:
-        #         for item in items_sorted:
-        #             if cart.get(item, 0) > 0:
-        #                 cart[item] -= 1
-        #                 items_in_offer -= 1
-        #                 break
-
     # apply multi offers
     for item, count in cart.items():
         if item in multi_offers:
@@ -71,6 +58,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
