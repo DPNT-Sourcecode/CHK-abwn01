@@ -58,6 +58,7 @@ def apply_free_item_offers(cart):
 
 
 def apply_group_offers(cart):
+    subtotal = 0
     for items, required, price in group_offers:
         items_sorted = list(items)
         items_sorted.sort(key=lambda x: prices[x], reverse=True)
@@ -65,7 +66,7 @@ def apply_group_offers(cart):
 
         if valid_item_count >= required:
             offer_count = valid_item_count // required
-            total += offer_count * price
+            subtotal += offer_count * price
             items_in_offer = offer_count * required
 
             while items_in_offer > 0:
@@ -74,6 +75,20 @@ def apply_group_offers(cart):
                         cart[item] -= 1
                         items_in_offer -= 1
                         break
+    return subtotal
+
+
+def apply_multi_offers(cart):
+    subtotal = 0
+    for item, count in cart.items():
+        if item in multi_offers:
+            for required, price in multi_offers[item]:
+                if count >= required:
+                    offer_count = count // required
+                    subtotal += offer_count * price
+                    count -= offer_count * required
+        subtotal += count * prices[item]
+    return subtotal
 
 
 # noinspection PyUnusedLocal
@@ -89,24 +104,9 @@ def checkout(skus: str) -> int:
     apply_free_item_offers(cart)
 
     # apply group offers
+    total += apply_group_offers(cart)
 
     # apply multi offers
-    for item, count in cart.items():
-        if item in multi_offers:
-            for required, price in multi_offers[item]:
-                if count >= required:
-                    offer_count = count // required
-                    total += offer_count * price
-                    count -= offer_count * required
-        total += count * prices[item]
+    total += apply_multi_offers(cart)
 
     return total
-
-
-
-
-
-
-
-
-
