@@ -35,7 +35,9 @@ def checkout(skus: str) -> int:
     # apply free item offers
     for item, offer in free_item_offers.items():
         if item in cart:
-            required, free_item, quant = free_item_offers[item]
+            required, free_item, quant = offer
+            if item == free_item:
+                required += quant
             count = cart[item]
             if count >= required:
                 offer_count = count // required
@@ -56,9 +58,3 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
-
-
-
-
-
-
