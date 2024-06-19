@@ -33,7 +33,15 @@ def checkout(skus: str) -> int:
     # apply free item discounts
     for item, offer in free_item_offers.items():
         if item in cart:
-            required, free_item, free_item_count = free_item_offers[item]
+            required, free_item, quant = free_item_offers[item]
+            count = cart[item]
+            if count >= required:
+                offer_count = count // required
+                free_items_count = offer_count * quant
+                if free_item in cart:
+                    cart[free_item] = max(
+                        0, cart[free_item] - free_items_count
+                    )
 
     # apply multi discounts
     for item, count in cart.items():
@@ -46,6 +54,7 @@ def checkout(skus: str) -> int:
         total += count * prices[item]
 
     return total
+
 
 
 
