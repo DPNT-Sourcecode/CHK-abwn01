@@ -46,4 +46,9 @@ free_item_offers = {
     "U": (3, "U", 1)
 }
 
+group_offers = {
+    ("STXYZ", 3, 45)
+}
+
+
 
