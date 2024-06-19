@@ -33,6 +33,7 @@ group_offers = {
 
 
 def validated(x):
+    """validates input param is string and exists in prices table"""
     if not isinstance(x, str):
         return False
     for _ in x:
@@ -42,6 +43,7 @@ def validated(x):
 
 
 def apply_free_item_offers(cart):
+    """removes free items from cart so they are not counted later"""
     for item, offer in free_item_offers.items():
         if item in cart:
             required, free_item, quant = offer
@@ -58,6 +60,7 @@ def apply_free_item_offers(cart):
 
 
 def apply_group_offers(cart):
+    """applies group offers and returns subtotal of items in offer"""
     subtotal = 0
     for items, required, price in group_offers:
         items_sorted = list(items)
@@ -79,6 +82,7 @@ def apply_group_offers(cart):
 
 
 def apply_multi_offers(cart):
+    """applies multi offers and returns subtotal of items in offer"""
     subtotal = 0
     for item, count in cart.items():
         if item in multi_offers:
@@ -110,3 +114,4 @@ def checkout(skus: str) -> int:
     total += apply_multi_offers(cart)
 
     return total
+
