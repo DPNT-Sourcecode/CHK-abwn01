@@ -32,7 +32,7 @@ group_offers = {
 }
 
 
-def validated(x):
+def validated(x) -> bool:
     """validates input param is string and exists in prices table"""
     if not isinstance(x, str):
         return False
@@ -42,7 +42,7 @@ def validated(x):
     return True
 
 
-def apply_free_item_offers(cart):
+def apply_free_item_offers(cart: Counter) -> None:
     """removes free items from cart so they are not counted later"""
     for item, offer in free_item_offers.items():
         if item in cart:
@@ -59,7 +59,7 @@ def apply_free_item_offers(cart):
                     )
 
 
-def apply_group_offers(cart):
+def apply_group_offers(cart: Counter) -> int:
     """applies group offers and returns subtotal of items in offer"""
     subtotal = 0
     for items, required, price in group_offers:
@@ -81,7 +81,7 @@ def apply_group_offers(cart):
     return subtotal
 
 
-def apply_multi_offers(cart):
+def apply_multi_offers(cart: Counter) -> int:
     """applies multi offers and returns subtotal of items in offer"""
     subtotal = 0
     for item, count in cart.items():
@@ -98,6 +98,7 @@ def apply_multi_offers(cart):
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
+    """calculates total cost of cart with all discounts applied"""
     if not validated(skus):
         return -1
 
@@ -106,12 +107,11 @@ def checkout(skus: str) -> int:
 
     # apply free item offers
     apply_free_item_offers(cart)
-
     # apply group offers
     total += apply_group_offers(cart)
-
     # apply multi offers
     total += apply_multi_offers(cart)
 
     return total
+
 
